@@ -1,0 +1,14 @@
+<svg aria-label="Crift logo" role="img" viewBox="0 0 960 320" xmlns="http://www.w3.org/2000/svg">
+  <style>
+    @import url("https://fonts.googleapis.com/css2?family=Chakra+Petch:ital,wght@1,600&amp;display=swap");
+  </style>
+  <g transform="translate(18 12)">
+    <path d="M224 68L184 32H94L45 80V202L94 250H184L224 210" fill="none" stroke="#F7F7F5" stroke-linejoin="miter" stroke-width="15"/>
+    <path d="M76 185L166 137" fill="none" stroke="#FF4D8D" stroke-linecap="square" stroke-width="9"/>
+    <path d="M91 211L172 150" fill="none" stroke="#F7F7F5" stroke-linecap="square" stroke-width="4"/>
+    <path d="M184 91L194 126L231 138L194 150L184 185L174 150L137 138L174 126Z" fill="#FF4D8D"/>
+  </g>
+  <text x="326" y="207" fill="#F7F7F5" font-family="'Chakra Petch', sans-serif" font-size="134" font-style="italic" font-weight="600" letter-spacing="-10" paint-order="stroke" stroke="#F7F7F5" stroke-width="1.5">CR<tspan fill="#FF4D8D" stroke="#FF4D8D">I</tspan>FT</text>
+  <path d="M482 69L487 81L500 86L487 91L482 104L477 91L464 86L477 81Z" fill="#FF4D8D"/>
+  <path d="M558 133L561 140L569 143L561 146L558 153L555 146L547 143L555 140Z" fill="#FF4D8D"/>
+</svg>
