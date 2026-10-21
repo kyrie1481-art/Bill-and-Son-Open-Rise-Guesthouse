@@ -1,0 +1,650 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bill and Son Open Rise Guesthouse | Pretoria</title>
+    
+    <!-- Google Fonts: Fraunces for headings, Inter for body -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,400;9..144,600&family=Inter:wght@400;500&display=swap" rel="stylesheet">
+
+    <style>
+        /* CSS VARIABLES - BRANDING & COLOUR PALETTE */
+        :root {
+            --color-black: #0a0e14;
+            --color-deep-blue: #0b3d91;
+            --color-navy: #0a1a3a;
+            --color-turquoise: #2dd4bf;
+            --color-pale-aqua: #eef7f8;
+            --color-white: #ffffff;
+            --color-text: #1a2a3a;
+            --color-text-light: #4a5a6a;
+            
+            --font-heading: 'Fraunces', serif;
+            --font-body: 'Inter', sans-serif;
+            
+            --transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            --shadow: 0 4px 20px rgba(10, 26, 58, 0.08);
+            --container-width: 1100px;
+        }
+
+        /* RESET & BASE STYLES */
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        html { scroll-behavior: smooth; }
+        body { 
+            font-family: var(--font-body); 
+            background-color: var(--color-white); 
+            color: var(--color-text);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        h1, h2, h3 { font-family: var(--font-heading); font-weight: 600; color: var(--color-navy); line-height: 1.2; }
+        a { text-decoration: none; color: inherit; transition: var(--transition); }
+        ul { list-style: none; }
+        img { max-width: 100%; display: block; }
+        
+        .section-padding { padding: 100px 20px; }
+        .container { max-width: var(--container-width); margin: 0 auto; }
+        
+        /* REVEAL ANIMATION */
+        .reveal { opacity: 0; transform: translateY(30px); transition: var(--transition); }
+        .reveal.active { opacity: 1; transform: translateY(0); }
+
+        /* BUTTONS */
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            padding: 14px 28px;
+            border-radius: 4px;
+            font-weight: 600;
+            cursor: pointer;
+            border: none;
+            transition: var(--transition);
+            font-size: 0.9rem;
+            text-align: center;
+        }
+        .btn-primary {
+            background-color: var(--color-turquoise);
+            color: var(--color-black); /* Dark text on turquoise for contrast */
+        }
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 15px rgba(45, 212, 191, 0.3);
+        }
+        .btn-outline {
+            border: 1px solid var(--color-navy);
+            color: var(--color-navy);
+            background: transparent;
+        }
+        .btn-outline:hover {
+            background: var(--color-navy);
+            color: var(--color-white);
+        }
+
+        .btn, .enquiry-bar, .about-image, .room-card, .amenity-item, .gallery-item, .review-card, .contact-map { position: relative; }
+        .btn::before, .btn::after,
+        .enquiry-bar::before, .enquiry-bar::after,
+        .about-image::before, .about-image::after,
+        .room-card::before, .room-card::after,
+        .amenity-item::before, .amenity-item::after,
+        .gallery-item::before, .gallery-item::after,
+        .review-card::before, .review-card::after,
+        .contact-map::before, .contact-map::after {
+            content: "";
+            position: absolute;
+            width: 42px;
+            height: 13px;
+            background-color: var(--color-turquoise);
+            -webkit-mask: url("star-trail.svg") center / contain no-repeat;
+            mask: url("star-trail.svg") center / contain no-repeat;
+            opacity: 0.85;
+            pointer-events: none;
+            z-index: 2;
+        }
+        .btn::before, .enquiry-bar::before, .about-image::before, .room-card::before,
+        .amenity-item::before, .gallery-item::before, .review-card::before, .contact-map::before { top: 3px; left: 3px; }
+        .btn::after, .enquiry-bar::after, .about-image::after, .room-card::after,
+        .amenity-item::after, .gallery-item::after, .review-card::after, .contact-map::after {
+            right: 3px;
+            bottom: 3px;
+            transform: rotate(180deg);
+        }
+        .btn-primary::before, .btn-primary::after { background-color: var(--color-navy); }
+
+        /* HEADER & BRAND STRIP */
+        .brand-strip {
+            background: var(--color-navy);
+            color: var(--color-white);
+            padding: 8px 20px;
+            font-size: 0.7rem;
+            text-align: center;
+            letter-spacing: 0.05rem;
+            text-transform: uppercase;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+        .brand-strip img { width: 58px; height: auto; opacity: 0.78; }
+
+        header {
+            background: var(--color-white);
+            padding: 20px;
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.05);
+        }
+        .header-content {
+            max-width: var(--container-width);
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        .logo { font-family: var(--font-heading); font-size: 1.4rem; color: var(--color-navy); }
+        nav ul { display: flex; gap: 30px; }
+        nav a { font-size: 0.9rem; font-weight: 500; color: var(--color-navy); }
+        nav a:hover { color: var(--color-deep-blue); }
+
+        /* HERO SECTION */
+        .hero {
+            height: 80vh;
+            min-height: 550px;
+            position: relative;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--color-white);
+            text-align: center;
+            background-color: var(--color-navy);
+            overflow: hidden;
+        }
+        .hero-bg {
+            position: absolute;
+            top: 0; left: 0; width: 100%; height: 100%;
+            /* Subtle blue-to-black gradient overlay */
+            background: linear-gradient(to bottom, rgba(11, 61, 145, 0.5), rgba(10, 14, 20, 0.85)),
+                        url('https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&q=80&w=2000');
+            background-size: cover;
+            background-position: center;
+        }
+        .hero-content { position: relative; z-index: 2; max-width: 800px; padding: 20px; }
+        .hero h1 { color: var(--color-white); font-size: clamp(2.5rem, 6vw, 4rem); margin-bottom: 20px; }
+        .hero p { font-size: 1.2rem; opacity: 0.9; margin-bottom: 40px; font-weight: 400; }
+
+        /* ENQUIRY BAR */
+        .enquiry-bar {
+            background: var(--color-white);
+            padding: 25px;
+            border-radius: 8px;
+            border: 1px solid rgba(45, 212, 191, 0.45);
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+            gap: 20px;
+            box-shadow: var(--shadow);
+            margin-top: -60px;
+            position: relative;
+            z-index: 10;
+        }
+        .input-group { display: flex; flex-direction: column; text-align: left; }
+        .input-group label { font-size: 0.7rem; font-weight: 600; text-transform: uppercase; color: var(--color-text-light); margin-bottom: 8px; letter-spacing: 0.05rem; }
+        .input-group input { border: 1px solid rgba(45, 212, 191, 0.5); padding: 12px 30px; border-radius: 4px; font-family: var(--font-body); font-size: 0.9rem; color: var(--color-navy); background-image: url("star-trail.svg"), url("star-trail.svg"); background-repeat: no-repeat; background-size: 24px 8px; background-position: left 2px top 2px, right 2px bottom 2px; }
+
+        /* ABOUT SECTION */
+        .about-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 80px;
+            align-items: center;
+        }
+        .about-text p { margin-bottom: 20px; color: var(--color-text-light); font-size: 1.05rem; }
+        .about-image img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; border: 1px solid rgba(45, 212, 191, 0.55); border-radius: 8px; }
+        .sample-tag { display: inline-block; background: var(--color-pale-aqua); color: var(--color-deep-blue); padding: 4px 12px; border-radius: 20px; font-size: 0.7rem; font-weight: 600; text-transform: uppercase; margin-bottom: 15px; }
+
+        /* ROOMS SECTION */
+        .bg-alt { background-color: var(--color-pale-aqua); }
+        .section-title { text-align: center; margin-bottom: 60px; }
+        .section-title h2 { font-size: 2.8rem; margin-bottom: 15px; }
+        .rooms-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 30px; }
+        .room-card {
+            background: var(--color-white);
+            border-radius: 8px;
+            border: 1px solid rgba(45, 212, 191, 0.45);
+            overflow: hidden;
+            box-shadow: var(--shadow);
+            transition: var(--transition);
+            display: flex;
+            flex-direction: column;
+        }
+        .room-card:hover { transform: translateY(-10px); }
+        .room-img { height: 280px; background-color: #cbd5e1; background-size: cover; background-position: center; }
+        .room-info { padding: 35px; flex-grow: 1; display: flex; flex-direction: column; }
+        .room-info h3 { margin-bottom: 12px; font-size: 1.5rem; }
+        .room-info p { font-size: 0.95rem; color: var(--color-text-light); margin-bottom: 25px; flex-grow: 1; }
+        .room-price { font-weight: 600; color: var(--color-navy); margin-bottom: 25px; display: block; font-size: 1.1rem; }
+
+        /* AMENITIES */
+        .amenities-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+        }
+        .amenity-item {
+            padding: 25px;
+            background: var(--color-white);
+            border: 1px solid rgba(11, 61, 145, 0.08);
+            border-radius: 4px;
+            font-weight: 500;
+            color: var(--color-navy);
+            text-align: center;
+        }
+
+        /* GALLERY */
+        .gallery-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 15px;
+        }
+        .gallery-item {
+            aspect-ratio: 1 / 1;
+            background-color: #f1f5f9;
+            cursor: pointer;
+            overflow: hidden;
+            border-radius: 4px;
+            border: 1px solid rgba(45, 212, 191, 0.55);
+        }
+        .gallery-item img {
+            width: 100%; height: 100%; object-fit: cover;
+            transition: var(--transition);
+        }
+        .gallery-item:hover img { transform: scale(1.05); }
+
+        /* REVIEWS */
+        .reviews-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 30px; }
+        .review-card {
+            padding: 40px;
+            background: var(--color-white);
+            border-radius: 8px;
+            border: 1px solid rgba(45, 212, 191, 0.45);
+            border-top: 4px solid var(--color-turquoise);
+            box-shadow: var(--shadow);
+        }
+        .review-card blockquote { font-family: var(--font-heading); font-style: italic; font-size: 1.15rem; margin-bottom: 25px; color: var(--color-navy); }
+        .review-author { font-weight: 600; font-size: 0.85rem; text-transform: uppercase; letter-spacing: 0.05rem; color: var(--color-text-light); }
+
+        /* CONTACT & LOCATION */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: 1fr 1.2fr;
+            gap: 60px;
+        }
+        .contact-details div { margin-bottom: 25px; }
+        .contact-label { font-weight: 600; display: block; font-size: 0.75rem; text-transform: uppercase; color: var(--color-text-light); margin-bottom: 5px; letter-spacing: 0.05rem; }
+        .contact-details a:not(.btn) { font-size: 1.1rem; color: var(--color-deep-blue); font-weight: 500; }
+        
+        .contact-map iframe {
+            width: 100%;
+            height: 100%;
+            min-height: 450px;
+            border: 0;
+            border-radius: 8px;
+            outline: 1px solid rgba(45, 212, 191, 0.55);
+            filter: grayscale(0.2) contrast(0.9);
+            box-shadow: var(--shadow);
+        }
+
+        /* FOOTER */
+        footer {
+            background: var(--color-black);
+            color: var(--color-white);
+            padding: 80px 20px;
+            text-align: center;
+        }
+        .footer-logo { font-family: var(--font-heading); font-size: 1.8rem; margin-bottom: 15px; color: var(--color-white); }
+        .footer-credits { font-size: 0.75rem; opacity: 0.5; margin-top: 40px; letter-spacing: 0.05rem; }
+
+        /* LIGHTBOX */
+        #lightbox {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: rgba(10, 14, 20, 0.98);
+            display: none; align-items: center; justify-content: center;
+            z-index: 2000; padding: 40px;
+        }
+        #lightbox img { max-height: 90vh; max-width: 90vw; object-fit: contain; border-radius: 4px; outline: 1px solid rgba(45, 212, 191, 0.7); }
+
+        /* MOBILE STICKY ENQUIRE */
+        .mobile-enquire {
+            position: fixed; bottom: 0; left: 0; width: 100%;
+            background: var(--color-white);
+            padding: 15px 20px;
+            display: none;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.1);
+            z-index: 900;
+        }
+
+        /* RESPONSIVE DESIGN */
+        @media (max-width: 900px) {
+            .about-grid, .contact-grid { grid-template-columns: 1fr; gap: 40px; }
+            .gallery-grid { grid-template-columns: repeat(2, 1fr); }
+            .hero h1 { font-size: 3rem; }
+        }
+
+        @media (max-width: 768px) {
+            nav { display: none; }
+            .mobile-enquire { display: block; }
+            .section-padding { padding: 70px 20px; }
+            .enquiry-bar { margin-top: -30px; grid-template-columns: 1fr; }
+            body { padding-bottom: 80px; } /* Space for sticky bar */
+        }
+
+        @media (prefers-reduced-motion: reduce) {
+            * { animation: none !important; transition: none !important; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- BRANDING STRIP -->
+    <div class="brand-strip">
+        Website by Collionel Rift
+        <img src="crift-logo.svg" alt="Crift">
+    </div>
+
+    <!-- HEADER -->
+    <header>
+        <div class="header-content">
+            <a href="#" class="logo" id="header-name">Guesthouse</a>
+            <nav>
+                <ul>
+                    <li><a href="#about">About</a></li>
+                    <li><a href="#rooms">Rooms</a></li>
+                    <li><a href="#gallery">Gallery</a></li>
+                    <li><a href="#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <a href="#contact" class="btn btn-primary">Enquire Now</a>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="hero-bg"></div>
+        <div class="hero-content reveal">
+            <h1 id="hero-title">A quiet retreat in the heart of Pretoria</h1>
+            <p id="hero-sub">Refined hospitality and custom comfort at Bill and Son Open Rise.</p>
+        </div>
+    </section>
+
+    <!-- ENQUIRY BAR -->
+    <div class="container">
+        <div class="enquiry-bar reveal">
+            <div class="input-group">
+                <label>Check-in Date</label>
+                <input type="date" id="checkin">
+            </div>
+            <div class="input-group">
+                <label>Check-out Date</label>
+                <input type="date" id="checkout">
+            </div>
+            <div class="input-group">
+                <label>Number of Guests</label>
+                <input type="number" id="guests" value="2" min="1">
+            </div>
+            <div class="input-group">
+                <label>&nbsp;</label>
+                <button class="btn btn-primary" onclick="whatsappEnquiry()">Ask about availability</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- ABOUT SECTION -->
+    <section id="about" class="section-padding">
+        <div class="container reveal">
+            <div class="about-grid">
+                <div class="about-text">
+                    <span class="sample-tag">Sample text</span>
+                    <h2>Welcoming you like family</h2>
+                    <p>Bill and Son Open Rise Guesthouse offers a tranquil escape for business and leisure travellers alike. Nestled in a quiet suburb of Pretoria, our property combines modern convenience with the warmth of South African hospitality.</p>
+                    <p>Our rooms are designed for rest, featuring high-quality linens and thoughtful touches to make your stay seamless. Whether you are here for a night or a week, we ensure every detail is handled with care.</p>
+                    <a href="#rooms" class="btn btn-outline" style="margin-top: 10px;">Explore our rooms</a>
+                </div>
+                <div class="about-image">
+                    <img src="https://images.unsplash.com/photo-1600585154340-be6161a56a0c?auto=format&fit=crop&q=85&w=1000" alt="Welcoming guesthouse exterior surrounded by greenery">
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- ROOMS SECTION -->
+    <section id="rooms" class="section-padding bg-alt">
+        <div class="container">
+            <div class="section-title reveal">
+                <h2>Our Rooms</h2>
+                <p>Comfortable spaces tailored for your relaxation</p>
+            </div>
+            <div class="rooms-grid" id="rooms-container">
+                <!-- Room cards are generated by the script below -->
+            </div>
+        </div>
+    </section>
+
+    <!-- AMENITIES SECTION -->
+    <section id="amenities" class="section-padding">
+        <div class="container reveal">
+            <div class="section-title">
+                <h2>Amenities</h2>
+                <p>Sample list, to be confirmed with the owner</p>
+            </div>
+            <div class="amenities-grid">
+                <div class="amenity-item">High-speed Wi-Fi</div>
+                <div class="amenity-item">Secure On-site Parking</div>
+                <div class="amenity-item">Complimentary Breakfast</div>
+                <div class="amenity-item">Daily Housekeeping</div>
+                <div class="amenity-item">Coffee & Tea Station</div>
+                <div class="amenity-item">Smart Television</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- GALLERY SECTION -->
+    <section id="gallery" class="section-padding bg-alt">
+        <div class="container reveal">
+            <div class="section-title">
+                <h2>Gallery</h2>
+            </div>
+            <div class="gallery-grid">
+                <!-- Placeholder images that remove themselves if they fail to load -->
+                <div class="gallery-item" onclick="openLightbox(this)"><img src="https://images.unsplash.com/photo-1590490360182-c33d57733427?auto=format&fit=crop&q=80&w=800" onerror="this.parentElement.style.display='none'"></div>
+                <div class="gallery-item" onclick="openLightbox(this)"><img src="https://images.unsplash.com/photo-1582719478250-c89cae4dc85b?auto=format&fit=crop&q=80&w=800" onerror="this.parentElement.style.display='none'"></div>
+                <div class="gallery-item" onclick="openLightbox(this)"><img src="https://images.unsplash.com/photo-1540518614846-7eded433c457?auto=format&fit=crop&q=80&w=800" onerror="this.parentElement.style.display='none'"></div>
+                <div class="gallery-item" onclick="openLightbox(this)"><img src="https://images.unsplash.com/photo-1595526114035-0d45ed16cfbf?auto=format&fit=crop&q=80&w=800" onerror="this.parentElement.style.display='none'"></div>
+                <div class="gallery-item" onclick="openLightbox(this)"><img src="https://images.unsplash.com/photo-1522771739844-6a9f6d5f14af?auto=format&fit=crop&q=80&w=800" onerror="this.parentElement.style.display='none'"></div>
+                <div class="gallery-item" onclick="openLightbox(this)"><img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&q=80&w=800" onerror="this.parentElement.style.display='none'"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- REVIEWS SECTION -->
+    <section id="reviews" class="section-padding">
+        <div class="container reveal">
+            <div class="section-title">
+                <h2>Guest Experiences</h2>
+                <p>Sample reviews from our visitors</p>
+            </div>
+            <div class="reviews-grid">
+                <div class="review-card">
+                    <span class="sample-tag">Sample review</span>
+                    <blockquote>"A wonderful stay. The hosts were incredibly welcoming and the room was spotless. Highly recommended for anyone visiting Pretoria."</blockquote>
+                    <div class="review-author">Guest Stay — Oct 2026</div>
+                </div>
+                <div class="review-card">
+                    <span class="sample-tag">Sample review</span>
+                    <blockquote>"The peace and quiet here is exactly what I needed. Great Wi-Fi for work and a very comfortable bed."</blockquote>
+                    <div class="review-author">Business Traveller — Sept 2026</div>
+                </div>
+                <div class="review-card">
+                    <span class="sample-tag">Sample review</span>
+                    <blockquote>"Beautifully maintained property with a lovely atmosphere. Will definitely be returning on my next trip."</blockquote>
+                    <div class="review-author">Leisure Visitor — Aug 2026</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- LOCATION AND CONTACT SECTION -->
+    <section id="contact" class="section-padding bg-alt">
+        <div class="container reveal">
+            <div class="contact-grid">
+                <div class="contact-info">
+                    <h2>Location & Contact</h2>
+                    <div class="contact-details" style="margin-top: 30px;">
+                        <div>
+                            <span class="contact-label">Address</span>
+                            <p id="contact-address" style="font-size: 1.1rem; font-weight: 500;">Suburb, Pretoria, Gauteng</p>
+                        </div>
+                        <div>
+                            <span class="contact-label">Phone</span>
+                            <a href="tel:+27761257060" id="contact-phone">076 125 7060</a>
+                        </div>
+                        <div>
+                            <span class="contact-label">WhatsApp</span>
+                            <a href="https://wa.me/27761257060" id="contact-whatsapp" target="_blank">Message us on WhatsApp</a>
+                        </div>
+                        <div>
+                            <span class="contact-label">Check-in / Check-out</span>
+                            <p id="contact-times">Check-in: 14:00 | Check-out: 10:00</p>
+                        </div>
+                        <a href="https://www.google.com/maps/search/?api=1&query=Pretoria+Gauteng" target="_blank" class="btn btn-outline" style="margin-top: 10px;">Get Directions</a>
+                    </div>
+                </div>
+                <div class="contact-map">
+                    <!-- Live Google Map Embed for Pretoria -->
+                    <iframe 
+                        title="Map of Pretoria, Gauteng"
+                        src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d114964.3819842416!2d28.08375677943513!3d-25.746019183917454!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x1e95619c92c11e2d%3A0x1e1ddf451761955!2sPretoria!5e0!3m2!1sen!2sza!4v1700000000000!5m2!1sen!2sza" 
+                        allowfullscreen="" 
+                        loading="lazy" 
+                        referrerpolicy="no-referrer-when-downgrade">
+                    </iframe>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER -->
+    <footer>
+        <div class="container">
+            <div class="footer-logo" id="footer-name">Bill and Son Open Rise</div>
+            <p>&copy; 2026 Bill and Son Open Rise Guesthouse.</p>
+            <div class="footer-credits">Website by Collionel Rift</div>
+        </div>
+    </footer>
+
+    <!-- STICKY MOBILE BUTTON -->
+    <div class="mobile-enquire">
+        <button class="btn btn-primary" style="width: 100%;" onclick="whatsappEnquiry()">Enquire on WhatsApp</button>
+    </div>
+
+    <!-- LIGHTBOX -->
+    <div id="lightbox" onclick="this.style.display='none'">
+        <img src="" id="lightbox-img">
+    </div>
+
+    <script>
+        /* 
+           EASY TO CUSTOMISE CONFIG OBJECT 
+           Change these values to update the entire site.
+        */
+        const CONFIG = {
+            name: "Bill and Son Open Rise Guesthouse",
+            phone: "076 125 7060",
+            whatsapp: "27761257060",
+            suburb: "Pretoria North",
+            checkIn: "14:00",
+            checkOut: "10:00",
+            rooms: [
+                {
+                    name: "Executive Suite",
+                    desc: "A spacious, sunlight-filled room featuring a king-size bed and private en-suite bathroom.",
+                    price: "R1 250",
+                    img: "https://images.unsplash.com/photo-1631049307264-da0ec9d70304?auto=format&fit=crop&q=80&w=800"
+                },
+                {
+                    name: "Standard Queen Room",
+                    desc: "Elegant and cozy, perfect for individual travellers or couples seeking a quiet night's rest.",
+                    price: "R950",
+                    img: "https://images.unsplash.com/photo-1611892440504-42a792e24d32?auto=format&fit=crop&q=80&w=800"
+                },
+                {
+                    name: "Twin Garden Room",
+                    desc: "Features two single beds with direct access to our tranquil garden courtyard.",
+                    price: "R850",
+                    img: "https://images.unsplash.com/photo-1566665797739-1674de7a421a?auto=format&fit=crop&q=80&w=800"
+                }
+            ]
+        };
+
+        /* INITIALIZE DATA FROM CONFIG */
+        document.getElementById('header-name').textContent = "Bill and Son Open Rise";
+        document.getElementById('footer-name').textContent = CONFIG.name;
+        document.getElementById('contact-address').textContent = `${CONFIG.suburb}, Pretoria, Gauteng`;
+        document.getElementById('contact-times').textContent = `Check-in: ${CONFIG.checkIn} | Check-out: ${CONFIG.checkOut}`;
+        
+        /* GENERATE ROOM CARDS */
+        const roomsContainer = document.getElementById('rooms-container');
+        CONFIG.rooms.forEach(room => {
+            const card = document.createElement('div');
+            card.className = 'room-card reveal';
+            card.innerHTML = `
+                <div class="room-img" style="background-image: url('${room.img}')"></div>
+                <div class="room-info">
+                    <h3>${room.name}</h3>
+                    <p>${room.desc}</p>
+                    <span class="room-price">from ${room.price} per night</span>
+                    <button class="btn btn-outline" onclick="whatsappRoom('${room.name}')">Enquire about this room</button>
+                </div>
+            `;
+            roomsContainer.appendChild(card);
+        });
+
+        /* WHATSAPP INTEGRATION */
+        function whatsappEnquiry() {
+            const cin = document.getElementById('checkin').value || 'Not specified';
+            const cout = document.getElementById('checkout').value || 'Not specified';
+            const guests = document.getElementById('guests').value;
+            const text = `Hello, I would like to enquire about availability at ${CONFIG.name}.\n\nCheck-in: ${cin}\nCheck-out: ${cout}\nGuests: ${guests}`;
+            window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        function whatsappRoom(roomName) {
+            const text = `Hello, I am interested in booking the ${roomName} at ${CONFIG.name}. Please let me know if it is available for my dates.`;
+            window.open(`https://wa.me/${CONFIG.whatsapp}?text=${encodeURIComponent(text)}`, '_blank');
+        }
+
+        /* LIGHTBOX FUNCTIONALITY */
+        function openLightbox(el) {
+            const lb = document.getElementById('lightbox');
+            const lbImg = document.getElementById('lightbox-img');
+            lbImg.src = el.querySelector('img').src;
+            lb.style.display = 'flex';
+        }
+
+        /* SCROLL REVEAL OBSERVER */
+        const observerOptions = { threshold: 0.15 };
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('active');
+                }
+            });
+        }, observerOptions);
+
+        document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+    </script>
+</body>
+</html>
